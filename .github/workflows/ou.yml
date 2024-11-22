@@ -1,0 +1,52 @@
+name:
+  New Organization Unit
+
+on:
+  workflow_dispatch:
+    inputs:
+      account:
+        description: 'AWS Management account ID'
+        required: true
+        type: string
+
+      parent:
+        description: 'Parent OU ID'
+        required: true
+        type: string
+
+      ou:
+        description: 'New Organization Unit name'
+        required: true
+        type: string
+
+env:
+  AWS_REGION : eu-central-1
+  ACCOUNT:     ${{ inputs.account }}
+  OU:          ${{ inputs.ou }}
+  PARENT:      ${{ inputs.parent }}
+
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  AssumeRoleAndTerraformApply:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v4
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          role-to-assume: arn:aws:iam::${{ env.ACCOUNT }}:role/service-role/cicd_role #change to reflect your IAM role’s ARN
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
+      - name: Create new OU via Terraform
+        run: |
+          cd ou_resources
+          terraform init -backend-config=../_terraform/remote_backend.hcl
+          terraform workspace select -or-create $PARENT-$OU
+          terraform apply --auto-approve -var parent_ou_id=$PARENT -var ou_name=$OU

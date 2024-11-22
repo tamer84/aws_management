@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+    name: ${ou_name}-${environment}
+    description: ${environment} environment in ${ou_name}
+    annotations:
+      aws-account-type: test
+      aws-account-id: '${account_id}'
+      aws-account-region: ${region}
+    labels:
+      environment-type: ${environment}
+      cloud-provider: aws
+      ou: ${ou_name}
+spec:
+    owner: ${owner}
+    domain: ${ou_name}

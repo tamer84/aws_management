@@ -1,0 +1,26 @@
+[
+  {
+    "Key": "AccountEmail",
+    "Value": "84tamer+iamtest-bungu@gmail.com"
+  },
+  {
+    "Key": "AccountName",
+    "Value": "iamtest-bungu"
+  },
+  {
+    "Key": "ManagedOrganizationalUnit",
+    "Value": "iamtest (ou-tdye-kidlpq01)"
+  },
+  {
+    "Key": "SSOUserEmail",
+    "Value": "84tamer@gmail.com"
+  },
+  {
+    "Key": "SSOUserFirstName",
+    "Value": "Tamer"
+  },
+  {
+    "Key": "SSOUserLastName",
+    "Value": "Husnu"
+  }
+]
