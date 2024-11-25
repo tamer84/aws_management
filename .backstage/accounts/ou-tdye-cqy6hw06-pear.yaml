@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+    name: apple-pear
+    description: AWS account 886436928235 for pear in OU apple
+    environment: pear
+    annotations:
+      aws-parent-ou-id: 'ou-tdye-cqy6hw06'
+      aws-account-id: '886436928235'
+      aws-account-region: eu-central-1
+spec:
+    owner: guests
+    domain: apple
