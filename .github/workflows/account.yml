@@ -38,7 +38,7 @@ env:
 
 permissions:
   id-token: write
-  contents: read
+  contents: write
 jobs:
   AssumeRoleAndCreateAccount:
     runs-on: ubuntu-22.04
