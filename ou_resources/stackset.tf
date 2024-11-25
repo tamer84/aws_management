@@ -1,3 +1,9 @@
+data "aws_partition" "current" {}
+
+data "tls_certificate" "github" {
+  url = "https://token.actions.githubusercontent.com"
+}
+
 data "aws_iam_openid_connect_provider" "openid_github" {
   url = "https://token.actions.githubusercontent.com"
 }
@@ -175,9 +181,7 @@ data "aws_iam_policy_document" "cicd_role_policy" {
   }
 }
 
-data "tls_certificate" "this" {
-  url = "https://token.actions.githubusercontent.com"
-}
+
 
 resource "aws_cloudformation_stack_set" "cicd_roles" {
   name = "cicd-roles-${var.ou_name}"
@@ -222,7 +226,7 @@ resource "aws_cloudformation_stack_set" "cicd_roles" {
         "Type" : "AWS::IAM::OIDCProvider",
         "Properties" : {
           "ClientIdList" : ["sts.${data.aws_partition.current.dns_suffix}"],
-          "ThumbprintList" : data.tls_certificate.this.certificates[*].sha1_fingerprint,
+          "ThumbprintList" : data.tls_certificate.github.certificates[*].sha1_fingerprint,
           "Url" : "https://token.actions.githubusercontent.com"
         }
       }
