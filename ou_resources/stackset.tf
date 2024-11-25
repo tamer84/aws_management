@@ -175,6 +175,9 @@ data "aws_iam_policy_document" "cicd_role_policy" {
   }
 }
 
+data "tls_certificate" "this" {
+  url = "https://token.actions.githubusercontent.com"
+}
 
 resource "aws_cloudformation_stack_set" "cicd_roles" {
   name = "cicd-roles-${var.ou_name}"
@@ -213,6 +216,14 @@ resource "aws_cloudformation_stack_set" "cicd_roles" {
             }
           ]
           PolicyDocument = data.aws_iam_policy_document.cicd_role_policy.json
+        }
+      },
+      OIDCProvider = {
+        "Type" : "AWS::IAM::OIDCProvider",
+        "Properties" : {
+          "ClientIdList" : ["sts.${data.aws_partition.current.dns_suffix}"],
+          "ThumbprintList" : data.tls_certificate.this.certificates[*].sha1_fingerprint,
+          "Url" : "https://token.actions.githubusercontent.com"
         }
       }
     }
