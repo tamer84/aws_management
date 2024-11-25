@@ -1,8 +1,8 @@
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
-    name: ${ou_name}-${environment}
-    description: ${environment} environment in ${parent_ou_name}
+    name: ${parent_ou_name}-${environment}
+    description: AWS account ${account_id} for ${environment} in OU ${parent_ou_name}
     annotations:
       aws-parent-ou-id: '${parent_ou_id}'
       aws-account-id: '${account_id}'
