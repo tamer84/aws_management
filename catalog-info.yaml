@@ -23,4 +23,4 @@ metadata:
   description: IAC systems collection
 spec:
   targets:
-    - _backstage/environments/*.yaml
+    - .backstage/*/*.yaml

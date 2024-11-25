@@ -27,7 +27,7 @@ env:
 
 permissions:
   id-token: write
-  contents: read
+  contents: write
 jobs:
   AssumeRoleAndTerraformApply:
     runs-on: ubuntu-22.04
