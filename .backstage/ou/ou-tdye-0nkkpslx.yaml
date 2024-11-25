@@ -1,0 +1,7 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: github
+  description: Terraform generated OU github
+  annotations:
+    ou_id: ou-tdye-0nkkpslx
