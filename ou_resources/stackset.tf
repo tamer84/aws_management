@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "cicd_role_assume" {
     principals {
       type        = "Federated"
       # TODO:: FIX THIS TO BE THE TARGET ACCOUNT ID
-      identifiers = [ "arn:aws:iam::*:oidc-provider/token.actions.githubusercontent.com" ]
+      identifiers = [ "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com" ]
     }
     condition {
       test     = "StringLike"
