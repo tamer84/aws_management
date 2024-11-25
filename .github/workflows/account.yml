@@ -61,3 +61,10 @@ jobs:
           terraform init -backend-config=../_terraform/remote_backend.hcl
           terraform workspace select -or-create $OU-$ENVIRONMENT
           terraform apply --auto-approve -var parent_ou_id=$OU -var domain=$DOMAIN -var environment=$ENVIRONMENT -var sso_email=$OWNER
+      - name: Update Backstage Catalog entries
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Added account to catalog"
+          git push
