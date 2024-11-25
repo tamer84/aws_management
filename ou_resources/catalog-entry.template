@@ -5,3 +5,5 @@ metadata:
   description: Terraform generated OU ${ou}
   annotations:
     ou_id: ${ou_id}
+spec:
+    owner: ${owner}
