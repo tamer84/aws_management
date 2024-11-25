@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: apple
+  description: Terraform generated OU apple
+  annotations:
+    ou_id: ou-tdye-cqy6hw06
+spec:
+    owner: guests
