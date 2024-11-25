@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
     name: ${ou_name}-${environment}
-    description: ${environment} environment in ${ou_name}
+    description: ${environment} environment in ${parent_ou_name}
     annotations:
       aws-account-type: test
       aws-account-id: '${account_id}'
@@ -13,4 +13,4 @@ metadata:
       ou: ${ou_name}
 spec:
     owner: ${owner}
-    domain: ${ou_name}
+    domain: ${parent_ou_name}
