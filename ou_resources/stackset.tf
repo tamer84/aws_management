@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "cicd_role_assume" {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     principals {
       type        = "Federated"
-      identifiers = ["arn:aws:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com"]
+      identifiers = [ "!Sub arn:aws:iam::$${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com" ]
     }
     condition {
       test     = "StringLike"
