@@ -9,6 +9,6 @@ resource "local_file" "backstage_catalog" {
     environment    = var.environment
     region         = var.region
     account_id     = data.external.get_account_id.result.Id
-    owner          = var.sso_email
+    owner          = "guests"
   })
 }
