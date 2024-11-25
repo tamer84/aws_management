@@ -13,3 +13,8 @@ variable "ou_name" {
   type        = string
   description = "New OU name"
 }
+
+variable "github_owner" {
+  type        = string
+  description = "Github owner for OIDC"
+}

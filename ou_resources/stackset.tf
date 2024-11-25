@@ -29,8 +29,8 @@ data "aws_iam_policy_document" "cicd_role_assume" {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
       values   = [
-        "repo:tamer84/aws_management:*",
-        "repo:tamer84/aws_environments:*"
+        "repo:${var.github_owner}/aws_management:*",
+        "repo:${var.github_owner}/aws_environments:*"
       ]
     }
     condition {
