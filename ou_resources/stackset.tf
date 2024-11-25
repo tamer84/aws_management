@@ -4,57 +4,57 @@ data "tls_certificate" "github" {
   url = "https://token.actions.githubusercontent.com"
 }
 
-#################
-# CICD ROLE
-#################
-data "aws_iam_policy_document" "cicd_role_assume" {
-  statement {
-    sid     = ""
-    effect  = "Allow"
-    actions = ["sts:AssumeRole"]
-    principals {
-      type        = "Service"
-      identifiers = ["events.amazonaws.com"]
-    }
-  }
-  statement {
-    sid     = ""
-    effect  = "Allow"
-    actions = ["sts:AssumeRoleWithWebIdentity"]
-    principals {
-      type        = "Federated"
-      # TODO:: FIX THIS TO BE THE TARGET ACCOUNT ID
-      identifiers = [ "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com" ]
-    }
-    condition {
-      test     = "StringLike"
-      variable = "token.actions.githubusercontent.com:sub"
-      values   = [
-        "repo:${var.github_owner}/aws_management:*",
-        "repo:${var.github_owner}/aws_environments:*"
-      ]
-    }
-    condition {
-      test     = "ForAllValues:StringEquals"
-      variable = "token.actions.githubusercontent.com:iss"
-      values   = ["https://token.actions.githubusercontent.com"]
-    }
-    condition {
-      test     = "ForAllValues:StringEquals"
-      variable = "token.actions.githubusercontent.com:aud"
-      values   = ["sts.amazonaws.com"]
-    }
-  }
-  statement {
-    sid     = ""
-    effect  = "Allow"
-    actions = ["sts:AssumeRole"]
-    principals {
-      type        = "AWS"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/service-role/cicd_role"]
-    }
-  }
-}
+# #################
+# # CICD ROLE
+# #################
+# data "aws_iam_policy_document" "cicd_role_assume" {
+#   statement {
+#     sid     = ""
+#     effect  = "Allow"
+#     actions = ["sts:AssumeRole"]
+#     principals {
+#       type        = "Service"
+#       identifiers = ["events.amazonaws.com"]
+#     }
+#   }
+#   statement {
+#     sid     = ""
+#     effect  = "Allow"
+#     actions = ["sts:AssumeRoleWithWebIdentity"]
+#     principals {
+#       type        = "Federated"
+#       # TODO:: FIX THIS TO BE THE TARGET ACCOUNT ID
+#       identifiers = [ "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com" ]
+#     }
+#     condition {
+#       test     = "StringLike"
+#       variable = "token.actions.githubusercontent.com:sub"
+#       values   = [
+#         "repo:${var.github_owner}/aws_management:*",
+#         "repo:${var.github_owner}/aws_environments:*"
+#       ]
+#     }
+#     condition {
+#       test     = "ForAllValues:StringEquals"
+#       variable = "token.actions.githubusercontent.com:iss"
+#       values   = ["https://token.actions.githubusercontent.com"]
+#     }
+#     condition {
+#       test     = "ForAllValues:StringEquals"
+#       variable = "token.actions.githubusercontent.com:aud"
+#       values   = ["sts.amazonaws.com"]
+#     }
+#   }
+#   statement {
+#     sid     = ""
+#     effect  = "Allow"
+#     actions = ["sts:AssumeRole"]
+#     principals {
+#       type        = "AWS"
+#       identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/service-role/cicd_role"]
+#     }
+#   }
+# }
 
 data "aws_iam_policy_document" "cicd_role_policy" {
   statement {
@@ -178,8 +178,6 @@ data "aws_iam_policy_document" "cicd_role_policy" {
   }
 }
 
-
-
 resource "aws_cloudformation_stack_set" "cicd_roles" {
   name = "cicd-roles-${var.ou_name}"
   parameters = {
@@ -204,7 +202,50 @@ resource "aws_cloudformation_stack_set" "cicd_roles" {
           RoleName                 = "cicd_role"
           Path                     = "/service-role/"
           MaxSessionDuration       = 14400
-          AssumeRolePolicyDocument = data.aws_iam_policy_document.cicd_role_assume.json
+          AssumeRolePolicyDocument = jsonencode( {
+
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "Action": "sts:AssumeRole",
+                "Principal": {
+                  "Service": "events.amazonaws.com"
+                }
+              },
+              {
+                "Effect": "Allow",
+                "Action": "sts:AssumeRoleWithWebIdentity",
+                "Principal": {
+                  "Federated": {
+                    "Fn::Sub": "arn:aws:iam::$${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com"
+                  }
+                },
+                "Condition": {
+                  "ForAllValues:StringEquals": {
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                    "token.actions.githubusercontent.com:iss": "https://token.actions.githubusercontent.com"
+                  },
+                  "StringLike": {
+                    "token.actions.githubusercontent.com:sub": [
+                      "repo:${var.github_owner}/aws_management:*",
+                      "repo:${var.github_owner}/aws_environments:*"
+                    ]
+                  }
+                }
+              },
+              {
+                "Effect": "Allow",
+                "Action": "sts:AssumeRole",
+                "Principal": {
+                  "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/service-role/cicd_role"
+                }
+              }
+            ]
+
+          }
+
+          )
         }
       },
       CICDRolePolicy = {

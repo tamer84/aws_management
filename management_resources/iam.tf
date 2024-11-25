@@ -9,7 +9,6 @@ resource "aws_iam_account_alias" "alias" {
   account_alias = "${var.organization}-management"
 }
 
-# Only account admins and the deployment user from this account can assume this role
 resource "aws_iam_role" "cicd_role" {
   name = "cicd_role"
   path = "/service-role/"
