@@ -4,4 +4,4 @@ metadata:
   name: ${ou}
   description: Terraform generated OU ${ou}
   annotations:
-    ou-acronym: ${ou}
+    ou_id: ${ou_id}
