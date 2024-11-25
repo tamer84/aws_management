@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+    name: github-test
+    description: AWS account 050752648745 for test in OU github
+    annotations:
+      aws-parent-ou-id: 'ou-tdye-0nkkpslx'
+      aws-account-id: '050752648745'
+      aws-account-region: eu-central-1
+spec:
+    owner: guests
+    domain: github
