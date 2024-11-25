@@ -4,13 +4,9 @@ metadata:
     name: ${ou_name}-${environment}
     description: ${environment} environment in ${parent_ou_name}
     annotations:
-      aws-account-type: test
+      aws-parent-ou-id: '${parent_ou_id}'
       aws-account-id: '${account_id}'
       aws-account-region: ${region}
-    labels:
-      environment-type: ${environment}
-      cloud-provider: aws
-      ou: ${ou_name}
 spec:
     owner: ${owner}
     domain: ${parent_ou_name}
