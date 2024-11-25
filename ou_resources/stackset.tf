@@ -4,10 +4,6 @@ data "tls_certificate" "github" {
   url = "https://token.actions.githubusercontent.com"
 }
 
-data "aws_iam_openid_connect_provider" "openid_github" {
-  url = "https://token.actions.githubusercontent.com"
-}
-
 #################
 # CICD ROLE
 #################
@@ -27,7 +23,7 @@ data "aws_iam_policy_document" "cicd_role_assume" {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     principals {
       type        = "Federated"
-      identifiers = [data.aws_iam_openid_connect_provider.openid_github.arn]
+      identifiers = ["arn:aws:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com"]
     }
     condition {
       test     = "StringLike"
