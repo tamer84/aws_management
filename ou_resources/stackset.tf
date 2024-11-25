@@ -26,7 +26,10 @@ data "aws_iam_policy_document" "cicd_role_assume" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:tamer84/aws_management:*"]
+      values   = [
+        "repo:tamer84/aws_management:*",
+        "repo:tamer84/aws_environments:*"
+      ]
     }
     condition {
       test     = "ForAllValues:StringEquals"
