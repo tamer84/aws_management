@@ -217,9 +217,8 @@ resource "aws_cloudformation_stack_set" "cicd_roles" {
                 "Effect": "Allow",
                 "Action": "sts:AssumeRoleWithWebIdentity",
                 "Principal": {
-                  "Federated": {
-                    "Fn::Sub": "arn:aws:iam::$${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com"
-                  }
+                  "Federated": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
+
                 },
                 "Condition": {
                   "ForAllValues:StringEquals": {
