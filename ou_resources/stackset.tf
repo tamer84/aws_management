@@ -23,7 +23,8 @@ data "aws_iam_policy_document" "cicd_role_assume" {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     principals {
       type        = "Federated"
-      identifiers = [ "!Sub arn:aws:iam::$${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com" ]
+      # TODO:: FIX THIS TO BE THE TARGET ACCOUNT ID
+      identifiers = [ "arn:aws:iam::*:oidc-provider/token.actions.githubusercontent.com" ]
     }
     condition {
       test     = "StringLike"
