@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: backstage
+  description: Terraform generated OU backstage
+  annotations:
+    ou_id: ou-tdye-dzpyq4g7
+spec:
+    owner: guests
