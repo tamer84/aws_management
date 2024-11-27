@@ -26,7 +26,7 @@ This is described below in [Management resources setup](#management-resources-se
 
 ## Getting started
 With Terraform and the aws-cli included in the [ubuntu-2204](https://github.com/actions/runner-images/blob/releases/ubuntu24/20241117/images/ubuntu/Ubuntu2204-Readme.md) GitHub image, only an AWS account is required to proceed.
-Clone/Fork this repo and follow the steps below to use it in your own AWS management account.
+Fork this repo and follow the steps below to use it in your own AWS management account.
 All you need outside of this repo is an AWS account and an IAMUser/IAMRole with the [AdministratorAccess managed policy](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AdministratorAccess.html) attached.
 
 ### AWS setup
