@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: ${ou}
+  description: Terraform generated OU ${ou}
+  annotations:
+    ou_id: ${ou_id}
+spec:
+    owner: ${owner}

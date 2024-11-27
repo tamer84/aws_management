@@ -1,0 +1,26 @@
+[
+  {
+    "Key": "AccountEmail",
+    "Value": "${AccountEmail}"
+  },
+  {
+    "Key": "AccountName",
+    "Value": "${AccountName}"
+  },
+  {
+    "Key": "ManagedOrganizationalUnit",
+    "Value": "${ManagedOrganizationalUnit}"
+  },
+  {
+    "Key": "SSOUserEmail",
+    "Value": "${SSOUserEmail}"
+  },
+  {
+    "Key": "SSOUserFirstName",
+    "Value": "${SSOUserFirstName}"
+  },
+  {
+    "Key": "SSOUserLastName",
+    "Value": "${SSOUserLastName}"
+  }
+]

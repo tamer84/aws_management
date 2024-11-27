@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+    name: tea-green
+    description: AWS account 872515270126 for green in OU tea
+    environment: green
+    annotations:
+      aws-parent-ou-id: 'ou-tdye-fo2si1qf'
+      aws-account-id: '872515270126'
+      aws-account-region: eu-central-1
+spec:
+    owner: guests
+    domain: tea

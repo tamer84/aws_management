@@ -1,0 +1,26 @@
+[
+  {
+    "Key": "AccountEmail",
+    "Value": "84tamer+github2-test@gmail.com"
+  },
+  {
+    "Key": "AccountName",
+    "Value": "github2-test"
+  },
+  {
+    "Key": "ManagedOrganizationalUnit",
+    "Value": "github2 (ou-tdye-ur2beps1)"
+  },
+  {
+    "Key": "SSOUserEmail",
+    "Value": "84tamer@gmail.com"
+  },
+  {
+    "Key": "SSOUserFirstName",
+    "Value": "Tamer"
+  },
+  {
+    "Key": "SSOUserLastName",
+    "Value": "Husnu"
+  }
+]
