@@ -11,7 +11,6 @@ spec:
   parameters:
     - title: AWS Provision account
       required:
-        - account_id
         - environment_name
         - parent_ou
         - owner
