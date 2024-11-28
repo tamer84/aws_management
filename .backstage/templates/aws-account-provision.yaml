@@ -30,8 +30,8 @@ spec:
           ui:options:
             allowArbitraryValues: false
             allowedKinds:
-              - Domain
-            defaultKind: Domain
+              - domain
+            defaultKind: domain
         owner:
           title: SSO Email of owner
           type: string
@@ -52,6 +52,6 @@ spec:
         branchOrTagName: main
         workflowInputs:
           environment: ${{ parameters.environment_name }}
-          domain: "${{ parameters.domain }}"
-          ou: ${{ steps['fetchOu'].output.entity.metadata.ou_id  }}
+          domain: ${{ parameters.domain }}
+          ou: ${{ steps['fetchOu'].output.entity.metadata.annotations.ou_id  }}
           owner: ${{ parameters.owner }}
