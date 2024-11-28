@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       account:
-        description: 'AWS Management account ID'
+        description: 'AWS account ID'
         required: true
         type: string
 

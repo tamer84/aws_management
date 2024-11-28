@@ -7,6 +7,7 @@ on:
       account:
         description: 'AWS Management account ID'
         required: true
+        default: 802306197541 #change me
         type: string
 
       ou:
@@ -32,7 +33,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4.0.2
         with:
-          role-to-assume: arn:aws:iam::${{ env.ACCOUNT }}:role/service-role/cicd_role #change to reflect your IAM role’s ARN
+          role-to-assume: arn:aws:iam::${{ env.ACCOUNT }}:role/service-role/cicd_role
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
       # Hello from AWS: WhoAmI

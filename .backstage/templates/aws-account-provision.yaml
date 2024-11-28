@@ -1,0 +1,62 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+# some metadata about the template itself
+metadata:
+  name: aws-account-provision
+  title: AWS Account Provision
+  description:  Provision a new AWS account
+spec:
+  owner: guests
+  type: Domain
+  parameters:
+    - title: AWS Provision account
+      required:
+        - account_id
+        - environment_name
+        - parent_ou
+        - owner
+      properties:
+        account_id:
+          title: Account id
+          type: string
+          description: Account id to provision
+        environment_name:
+          title: Environment name
+          type: string
+          description: Name of the environment
+        domain:
+          title: Route53 domain
+          type: string
+          description: Route53 domain to assign subdomains under
+        parent_ou:
+          title: Parent OU name
+          type: string
+          description: Parent OU of the new account
+        owner:
+          title: SSO Email of owner
+          type: string
+          description: Email of account owner. Should be registered user in Identity Center
+
+
+
+  steps:
+    -
+    - id: fetchOu
+      name: Fetch OU
+      action: catalog:fetch
+      input:
+        entityRef: ${{ parameters.parent_ou }}
+
+    - id: environment-operation
+      name: AWS provision new account
+      action: github:actions:dispatch
+      input:
+        repoUrl: github.com?repo=aws_management&owner=tamer84
+        workflowId: account.yml
+        branchOrTagName: main
+        workflowInputs:
+          account: ${{ parameters.ou_name }}
+          environment: ${{ parameters.environment_name }}
+          domain: ${{ parameters.domain }}
+          parent_ou: ${{ steps['fetchOu'].output.entity.metadata.ou_id  }}
+          owner: ${{ parameters.owner }}
