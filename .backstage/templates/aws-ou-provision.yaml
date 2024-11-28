@@ -28,9 +28,9 @@ spec:
       name: AWS provision new OU
       action: github:actions:dispatch
       input:
-        account: ${{ steps['fetchManagementAccount'].output.entity.metadata.annotations.aws-account-id  }}
         repoUrl: github.com?repo=aws_management&owner=tamer84
         workflowId: ou.yml
         branchOrTagName: main
         workflowInputs:
+          account: ${{ steps['fetchManagementAccount'].output.entity.metadata.annotations.aws-account-id  }}
           ou: ${{ parameters.ou_name }}

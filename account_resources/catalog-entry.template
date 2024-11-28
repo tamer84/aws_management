@@ -8,6 +8,7 @@ metadata:
       aws-parent-ou-id: '${parent_ou_id}'
       aws-account-id: '${account_id}'
       aws-account-region: ${region}
+      type: workload
 spec:
     owner: ${owner}
     domain: ${parent_ou_name}
