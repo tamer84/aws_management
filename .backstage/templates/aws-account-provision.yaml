@@ -51,7 +51,6 @@ spec:
         workflowId: account.yml
         branchOrTagName: main
         workflowInputs:
-          account: ${{ parameters.ou_name }}
           environment: ${{ parameters.environment_name }}
           domain: ${{ parameters.domain }}
           ou: ${{ steps['fetchOu'].output.entity.metadata.ou_id  }}
