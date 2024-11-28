@@ -8,6 +8,7 @@ metadata:
       aws-parent-ou-id: 'ou-tdye-curuuwpr'
       aws-account-id: '235494799876'
       aws-account-region: eu-central-1
+      type: workload
 spec:
     owner: guests
     domain: bingo

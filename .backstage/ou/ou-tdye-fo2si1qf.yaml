@@ -5,6 +5,5 @@ metadata:
   description: Terraform generated OU tea
   annotations:
     ou_id: ou-tdye-fo2si1qf
-    type: workload
 spec:
     owner: guests

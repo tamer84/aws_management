@@ -5,6 +5,5 @@ metadata:
   description: Terraform generated OU bingo
   annotations:
     ou_id: ou-tdye-curuuwpr
-    type: workload
 spec:
     owner: guests

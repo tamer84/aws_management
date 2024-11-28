@@ -8,6 +8,7 @@ metadata:
       aws-parent-ou-id: 'ou-tdye-fo2si1qf'
       aws-account-id: '872515270126'
       aws-account-region: eu-central-1
+      type: workload
 spec:
     owner: guests
     domain: tea
