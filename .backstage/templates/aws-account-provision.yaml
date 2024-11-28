@@ -52,6 +52,6 @@ spec:
         branchOrTagName: main
         workflowInputs:
           environment: ${{ parameters.environment_name }}
-          domain: ${{ parameters.domain }}
+          domain: "${{ parameters.domain }}"
           ou: ${{ steps['fetchOu'].output.entity.metadata.ou_id  }}
           owner: ${{ parameters.owner }}
