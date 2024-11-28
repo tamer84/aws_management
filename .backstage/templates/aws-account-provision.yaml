@@ -32,6 +32,8 @@ spec:
             allowedKinds:
               - domain
             defaultKind: domain
+            params:
+              filter: kind=Domain,metadata.annotations.type=workload
         owner:
           title: SSO Email of owner
           type: string

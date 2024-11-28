@@ -1,0 +1,41 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+# some metadata about the template itself
+metadata:
+  name: aws-management-configure
+  title: Configure management account
+  description:  Setup Backstage with the management account data
+spec:
+  owner: guests
+  type: management
+  parameters:
+    - title: AWS Management account info
+      required:
+        - account_id
+        - root_ou
+      properties:
+        account_id:
+          title: Management account ID
+          type: string
+          description: AWS ID of the management account
+        root_ou_id:
+          title: Root OU ID
+          type: string
+          description: ID of the Root Organization Unit
+
+steps:
+  - action: catalog:write
+    id: create-catalog-info-file
+    name: Create catalog file
+    input:
+      entity:
+        apiVersion: backstage.io/v1alpha1
+        kind: Domain
+        metadata:
+          name: root
+          annotations:
+            ou_id: ${{  parameters.root_ou_id  }}
+            aws-account-id: ${{  parameters.account_id  }}
+            type: management
+        spec:
+          owner: guests
