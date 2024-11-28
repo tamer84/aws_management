@@ -42,4 +42,4 @@ spec:
       id: register-with-catalog
       name: Register with the catalog
       input:
-        repoContentsUrl: .
+        catalogInfoUrl: ${{  steps.create-catalog-info-file.output.catalogInfoUrl  }}
