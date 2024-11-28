@@ -41,7 +41,7 @@ spec:
       name: Fetch Management Account data
       action: catalog:fetch
       input:
-        entityRef: management
+        entityRef: system:default/management
     - id: fetchOu
       name: Fetch OU
       action: catalog:fetch
