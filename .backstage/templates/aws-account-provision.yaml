@@ -56,7 +56,7 @@ spec:
         workflowId: account.yml
         branchOrTagName: main
         workflowInputs:
-          account: ${{ steps['fetchManagementAccount'].output.entity.metadata.annotations.aws-account-id  }}
+          account: ${{ steps['fetchManagementAccount'].output.entity.metadata.annotations['aws-account-id'] }}
           environment: ${{ parameters.environment_name }}
           domain: ${{ parameters.domain }}
           ou: ${{ steps['fetchOu'].output.entity.metadata.annotations.ou_id  }}

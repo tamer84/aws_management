@@ -24,6 +24,7 @@ spec:
       action: catalog:fetch
       input:
         entityRef: system:default/management
+
     - id: environment-operation
       name: AWS provision new OU
       action: github:actions:dispatch
@@ -32,5 +33,5 @@ spec:
         workflowId: ou.yml
         branchOrTagName: main
         workflowInputs:
-          account: ${{ steps['fetchManagementAccount'].output.entity.metadata.annotations.aws-account-id  }}
+          account: ${{ steps['fetchManagementAccount'].output.entity.metadata.annotations['aws-account-id'] }}
           ou: ${{ parameters.ou_name }}

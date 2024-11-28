@@ -24,12 +24,6 @@ permissions:
   id-token: write
   contents: write
 jobs:
-  OutputInputs:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Output the inputs
-        run: |
-          echo "${{ toJSON(github.event.inputs) }}"
   AssumeRoleAndTerraformApply:
     runs-on: ubuntu-22.04
     steps:
