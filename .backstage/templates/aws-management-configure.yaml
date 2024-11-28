@@ -38,3 +38,8 @@ spec:
               type: management
           spec:
             owner: guests
+    - action: catalog:register
+      id: register-with-catalog
+      name: Register with the catalog
+      input:
+        repoContentsUrl: .
