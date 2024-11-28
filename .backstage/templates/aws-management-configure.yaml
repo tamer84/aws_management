@@ -42,4 +42,4 @@ spec:
       id: register-with-catalog
       name: Register with the catalog
       input:
-        catalogInfoUrl: ${{  steps.create-catalog-info-file.output.catalogInfoUrl  }}
+        catalogInfoUrl: ./catalog-info.yaml
