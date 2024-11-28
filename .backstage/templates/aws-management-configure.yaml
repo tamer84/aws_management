@@ -22,20 +22,19 @@ spec:
           title: Root OU ID
           type: string
           description: ID of the Root Organization Unit
-
-steps:
-  - action: catalog:write
-    id: create-catalog-info-file
-    name: Create catalog file
-    input:
-      entity:
-        apiVersion: backstage.io/v1alpha1
-        kind: Domain
-        metadata:
-          name: root
-          annotations:
-            ou_id: ${{  parameters.root_ou_id  }}
-            aws-account-id: ${{  parameters.account_id  }}
-            type: management
-        spec:
-          owner: guests
+  steps:
+    - action: catalog:write
+      id: create-catalog-info-file
+      name: Create catalog file
+      input:
+        entity:
+          apiVersion: backstage.io/v1alpha1
+          kind: Domain
+          metadata:
+            name: root
+            annotations:
+              ou_id: ${{  parameters.root_ou_id  }}
+              aws-account-id: ${{  parameters.account_id  }}
+              type: management
+          spec:
+            owner: guests
