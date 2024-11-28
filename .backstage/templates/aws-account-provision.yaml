@@ -32,13 +32,16 @@ spec:
             allowedKinds:
               - domain
             defaultKind: domain
-            params:
-              filter: kind=Domain,metadata.annotations.type=workload
         owner:
           title: SSO Email of owner
           type: string
           description: Email of account owner. Should be registered user in Identity Center
   steps:
+    - id: fetchManagementAccount
+      name: Fetch Management Account data
+      action: catalog:fetch
+      input:
+        entityRef: management
     - id: fetchOu
       name: Fetch OU
       action: catalog:fetch
@@ -53,6 +56,7 @@ spec:
         workflowId: account.yml
         branchOrTagName: main
         workflowInputs:
+          account: ${{ steps['fetchManagementAccount'].output.entity.metadata.annotations.aws-account-id  }}
           environment: ${{ parameters.environment_name }}
           domain: ${{ parameters.domain }}
           ou: ${{ steps['fetchOu'].output.entity.metadata.annotations.ou_id  }}

@@ -19,11 +19,16 @@ spec:
           description: Name for the new OU
 
   steps:
-
+    - id: fetchManagementAccount
+      name: Fetch Management Account data
+      action: catalog:fetch
+      input:
+        entityRef: management
     - id: environment-operation
       name: AWS provision new OU
       action: github:actions:dispatch
       input:
+        account: ${{ steps['fetchManagementAccount'].output.entity.metadata.annotations.aws-account-id  }}
         repoUrl: github.com?repo=aws_management&owner=tamer84
         workflowId: ou.yml
         branchOrTagName: main

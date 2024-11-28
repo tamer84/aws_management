@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: management
+  description: AWS management account - update this file with your management acount id and root organization id
+  annotations:
+    aws-parent-ou-id: 'r-tdye'
+    aws-account-id: '802306197541'
+    aws-account-region: eu-central-1
+spec:
+  owner: guests
