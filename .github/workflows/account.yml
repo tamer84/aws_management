@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       account:
-        description: 'AWS account ID'
+        description: 'AWS Management account ID'
         required: true
+        default: 802306197541 #change me
         type: string
 
       environment:

@@ -16,10 +16,6 @@ spec:
         - parent_ou
         - owner
       properties:
-        account_id:
-          title: Account id
-          type: string
-          description: Account id to provision
         environment_name:
           title: Environment name
           type: string
