@@ -36,11 +36,7 @@ spec:
           title: SSO Email of owner
           type: string
           description: Email of account owner. Should be registered user in Identity Center
-
-
-
   steps:
-    -
     - id: fetchOu
       name: Fetch OU
       action: catalog:fetch

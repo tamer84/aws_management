@@ -11,7 +11,7 @@ spec:
   parameters:
     - title: AWS Provision OU
       required:
-        - name
+        - ou_name
       properties:
         ou_name:
           title: OU Name
