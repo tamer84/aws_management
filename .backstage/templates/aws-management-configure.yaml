@@ -28,11 +28,6 @@ steps:
             type: management
         spec:
           owner: guests
-  - action: debug:log
-    id: write-workspace-directory
-    name: List the workspace directory
-    input:
-      listWorkspace: true
   - action: catalog:register
     id: register-with-catalog
     name: Register with the catalog
