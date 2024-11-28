@@ -7,7 +7,7 @@ metadata:
   description:  Provision a new AWS OU
 spec:
   owner: guests
-  type: Domain
+  type: OU
   parameters:
     - title: AWS Provision OU
       required:

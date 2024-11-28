@@ -7,7 +7,7 @@ metadata:
   description:  Provision a new AWS account
 spec:
   owner: guests
-  type: Domain
+  type: Account
   parameters:
     - title: AWS Provision account
       required:
