@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+    name: bingo-bango
+    description: AWS account 235494799876 for bango in OU bingo
+    environment: bango
+    annotations:
+      aws-parent-ou-id: 'ou-tdye-curuuwpr'
+      aws-account-id: '235494799876'
+      aws-account-region: eu-central-1
+spec:
+    owner: guests
+    domain: bingo
