@@ -11,7 +11,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.75.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.75.1 |
 | <a name="provider_external"></a> [external](#provider\_external) | 2.3.4 |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | 4.0.6 |
 
@@ -30,7 +30,7 @@ No modules.
 | [aws_iam_role_policy.cicd_assume_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_iam_role_policy.cicd_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_iam_role_policy_attachment.service-catalog-cicd-role-policy-attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_servicecatalog_principal_portfolio_association.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/servicecatalog_principal_portfolio_association) | resource |
+| [aws_servicecatalog_principal_portfolio_association.cicd_role_sc_principal](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/servicecatalog_principal_portfolio_association) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_iam_policy.AWSServiceCatalogAdminFullAccess](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy) | data source |
 | [aws_iam_policy_document.AWSCloudFormationStackSetAdministrationRole_assume_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
@@ -44,9 +44,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_organization"></a> [organization](#input\_organization) | Organization name | `string` | `"84tamer"` | no |
+| <a name="input_github_owner"></a> [github\_owner](#input\_github\_owner) | GitHub repository owner | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | AWS Region to deploy resources in | `string` | `"eu-central-1"` | no |
-| <a name="input_repo_slug"></a> [repo\_slug](#input\_repo\_slug) | GitHub repo slug | `string` | `"tamer84/aws_management"` | no |
 
 ## Outputs
 

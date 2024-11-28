@@ -26,8 +26,8 @@ This is described below in [Management resources setup](#management-resources-se
 
 ## Getting started
 With Terraform and the aws-cli included in the [ubuntu-2204](https://github.com/actions/runner-images/blob/releases/ubuntu24/20241117/images/ubuntu/Ubuntu2204-Readme.md) GitHub image, only an AWS account is required to proceed.
-Clone/Fork this repo and follow the steps below to use it in your own AWS management account.
-All you need outside of this repo is an AWS account and an IAMUser/IAMRole with the [AdministratorAccess managed policy](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AdministratorAccess.html) attached.
+Fork this repo and follow the steps below to use it in your own AWS management account.
+All you need outside of this repo is an AWS account with an IAMUser/IAMRole with the [AdministratorAccess managed policy](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AdministratorAccess.html) attached.
 
 ### AWS setup
 The repo is designed to work in a Control Tower managed AWS setup.  
@@ -38,11 +38,12 @@ The second step therefore, is to [enable Cloud Formation trusted access for AWS 
 
 Optionally, a Route53 Hosted Zone can be used to allow DNS Delegation to be performed into the newly created accounts.  
 For this the account would need a Route53 Hosted Zone configured.  
+If you want to skip the Route53 step then comment out [account_resources/dns.tf](account_resources/dns.tf).  
 
 ### Terraform setup
 Directory [_terraform](_terraform) contains a simple declaration to provision an S3 bucket and DynamodDB lock table for Terraform.  
 The [S3 Bucket](_terraform/main.tf#10) it creates is shared between the Terraform projects, [management_resources](management_resources), [ou_resources](ou_resources) and [account_resources](account_resources).  
-A [partial backend](https://developer.hashicorp.com/terraform/language/backend#partial-configuration) file is also [generated](_terraform/backend_remote.tf), and used in the three above mentioned repos, with independent keys.  
+A [partial backend](https://developer.hashicorp.com/terraform/language/backend#partial-configuration) file is also [generated](_terraform/backend_remote.tf), and used in the three above-mentioned repos, with independent keys.  
 
 This should be applied once by an account user with permissions to assume the AWSAdministratorAccess role.  
 The default workspace can be used.  

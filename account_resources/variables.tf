@@ -12,6 +12,7 @@ variable "parent_ou_id" {
 variable "domain" {
   type        = string
   description = "DNS domain"
+  default     = ""
 }
 
 variable "environment" {

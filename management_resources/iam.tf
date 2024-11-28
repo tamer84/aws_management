@@ -6,7 +6,7 @@ data "aws_iam_roles" "sso_role_admin" {
 }
 
 resource "aws_iam_account_alias" "alias" {
-  account_alias = "${var.organization}-management"
+  account_alias = "${var.github_owner}-management-${data.aws_caller_identity.current.account_id}"
 }
 
 resource "aws_iam_role" "cicd_role" {
@@ -28,7 +28,7 @@ resource "aws_iam_role" "cicd_role" {
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
                 "StringLike": {
-                    "token.actions.githubusercontent.com:sub": "repo:${var.repo_slug}:*"
+                    "token.actions.githubusercontent.com:sub": "repo:${var.github_owner}/*:*"
                 },
                 "ForAllValues:StringEquals": {
                     "token.actions.githubusercontent.com:iss": "https://token.actions.githubusercontent.com",

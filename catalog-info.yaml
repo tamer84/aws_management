@@ -14,7 +14,7 @@ metadata:
 spec:
   type: library
   lifecycle: production
-  owner: platform
+  owner: guests
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Location

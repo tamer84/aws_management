@@ -4,12 +4,7 @@ variable "region" {
   default     = "eu-central-1"
 }
 
-variable "organization" {
+variable "github_owner" {
   type        = string
-  description = "Organization name"
-}
-
-variable "repo_slug" {
-  type        = string
-  description = "GitHub repo slug"
+  description = "GitHub repository owner"
 }

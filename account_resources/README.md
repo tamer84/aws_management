@@ -47,9 +47,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_account_email"></a> [account\_email](#input\_account\_email) | Email of account, will be auto extended with "+" notation to be unique | `string` | n/a | yes |
-| <a name="input_domain"></a> [domain](#input\_domain) | DNS Zone Apex name | `string` | n/a | yes |
-| <a name="input_environment"></a> [environment](#input\_environment) | Environment type: dev, int, playground | `string` | n/a | yes |
+| <a name="input_domain"></a> [domain](#input\_domain) | DNS domain | `string` | `""` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | Environment name | `string` | n/a | yes |
 | <a name="input_parent_ou_id"></a> [parent\_ou\_id](#input\_parent\_ou\_id) | Parent OU ID to create solution under | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | AWS Region to deploy resources in | `string` | `"eu-central-1"` | no |
 | <a name="input_sso_email"></a> [sso\_email](#input\_sso\_email) | Email of account administrator | `string` | n/a | yes |
