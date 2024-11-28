@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: hirsch
+  description: Terraform generated OU hirsch
+  annotations:
+    ou_id: ou-tdye-lpam3hj9
+spec:
+    owner: guests
