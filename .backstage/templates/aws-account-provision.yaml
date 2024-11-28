@@ -54,5 +54,5 @@ spec:
           account: ${{ parameters.ou_name }}
           environment: ${{ parameters.environment_name }}
           domain: ${{ parameters.domain }}
-          parent_ou: ${{ steps['fetchOu'].output.entity.metadata.ou_id  }}
+          ou: ${{ steps['fetchOu'].output.entity.metadata.ou_id  }}
           owner: ${{ parameters.owner }}
