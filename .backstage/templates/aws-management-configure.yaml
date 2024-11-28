@@ -12,7 +12,7 @@ spec:
     - title: AWS Management account info
       required:
         - account_id
-        - root_ou
+        - root_ou_id
       properties:
         account_id:
           title: Management account ID
