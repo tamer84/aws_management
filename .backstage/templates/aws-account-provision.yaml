@@ -25,9 +25,14 @@ spec:
           type: string
           description: Route53 domain to assign subdomains under
         parent_ou:
-          title: Parent OU name
-          type: string
-          description: Parent OU of the new account
+          title: Parent OU
+          description: Parent OU for account
+          ui:field: EntityPicker
+          ui:options:
+            allowArbitraryValues: false
+            allowedKinds:
+              - Domain
+            defaultKind: Domain
         owner:
           title: SSO Email of owner
           type: string
