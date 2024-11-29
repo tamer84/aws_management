@@ -187,7 +187,8 @@ The logic in these two directories is based on the AWS YouTube video [Programmat
 Responsible for creating new Control Tower managed OUs.  
 ![OuCreation](diagrams/AWS_Automation_GitHub-OUCreation.drawio.png)  
 
-* User launches the [ou.yaml workflow](.github/workflows/ou.yml). 
+* User launches the [AWS OU Provision template](http://localhost:3000/create/templates/default/aws-ou-provision). 
+* Backstage triggers the [ou.yaml workflow](.github/workflows/ou.yml).
 * The new OU is created
 * Backstage Catalog is [updated](#backstage-catalog-entries)
 
@@ -205,7 +206,8 @@ The StackSet contains the IAMRole and configures GitHub as a trusted OIDC provid
 Responsible for creating new Control Tower managed accounts within managed OUs.  
 ![AccountCreation](diagrams/AWS_Automation_GitHub-AccountCreation.drawio.png) 
 
-* User launches the [account.yaml workflow](.github/workflows/account.yml).
+* User launches the [AWS Account Provision template](http://localhost:3000/create/templates/default/aws-account-provision).
+* Backstage triggers the [account.yaml workflow](.github/workflows/account.yml).
 * The new account is created
 * The StackSet injects the IAMRole and configures GitHub as an OIDC provider 
 * Backstage Catalog is [updated](#backstage-catalog-entries)
