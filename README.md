@@ -66,7 +66,8 @@ Backstage sources are not part of this repo, and detailed setup instructions are
 If you want to industrialize the setup after trying it out, there are deployment instructions available at the [official Backstage documentation](https://backstage.io/docs/deployment/).
 
 For this simple example, it's enough to launch Backstage locally.  
-Just follow the [getting-started](https://backstage.io/docs/getting-started/) instructions provided by Backstage to get the sources.
+Just follow the [getting-started](https://backstage.io/docs/getting-started/) instructions provided by Backstage to get the sources.  
+Before you start Backstage continue with the configuration here.  
 
 ### Backstage Configuration
 This setup requires [GitHub actions to be installed](https://backstage.io/docs/features/software-templates/builtin-actions/), so that the GitHub MR can be created.
@@ -77,6 +78,7 @@ From backstage root dir call:
 and add to `/packages/backend/src/index.ts`:  
 `backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));`
 
+#### GitHub access token
 To be able to discover the Catalog Entities from GitHub (and to trigger the eventual MR), Backstage requires a Token with the scopes (repo, workflow) for GitHub.  
 For this simple scenario, it is enough to [create a PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) and set it as an environment variable (GITHUB_TOKEN).
 
