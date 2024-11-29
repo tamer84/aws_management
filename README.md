@@ -80,9 +80,11 @@ and add to `/packages/backend/src/index.ts`:
 To be able to discover the Catalog Entities from GitHub (and to trigger the eventual MR), Backstage requires a Token with the scopes (repo, workflow) for GitHub.  
 For this simple scenario, it is enough to [create a PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) and set it as an environment variable (GITHUB_TOKEN).
 
+#### Management account configuration
 There is a special [catalog entry for the management account](.backstage/management/management.yaml), so that the automation knows where Control Tower and the root OU are.  
 Update the contents of the file to correctly reflect your management account ID and root OU.  
 
+#### app-config.yaml
 Finally, copy over the [example app-config.yaml](.backstage/config/app-config.yaml) from this repo.
 
 ````
@@ -138,9 +140,7 @@ Part of the [aws_environments repository](https://github.com/tamer84/aws_environ
 
 ## Usage
 Interacting with the example is via Backstage Templates, which trigger [GitHub Actions](https://github.com/features/actions).  
-The templates can be accessed in the local running instance of [Backstage](http://localhost:3000/create?filters%5Bkind%5D=template&filters%5Buser%5D=all&limit=20).  
-
-
+The templates can be accessed in the local running instance of [Backstage](http://localhost:3000/create?filters%5Bkind%5D=template&filters%5Buser%5D=all&limit=20).
 
 ## Workflows
 The two workflows (OU and account) are defined in the [.github/workflows](.github/workflows) directory.  
