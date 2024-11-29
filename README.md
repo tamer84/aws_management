@@ -40,6 +40,7 @@ Optionally, a Route53 Hosted Zone can be used to allow DNS Delegation to be perf
 For this the account would need a Route53 Hosted Zone configured.  
 If you want to skip the Route53 step then comment out [account_resources/dns.tf](account_resources/dns.tf).  
 
+
 ### Terraform setup
 Directory [_terraform](_terraform) contains a simple declaration to provision an S3 bucket and DynamodDB lock table for Terraform.  
 The [S3 Bucket](_terraform/main.tf#10) it creates is shared between the Terraform projects, [management_resources](management_resources), [ou_resources](ou_resources) and [account_resources](account_resources).  
@@ -54,11 +55,94 @@ GitHub is [configured as an OpenID Connect (OIDC) Provider](management_resources
 The IAMRole [cicd_role](management_resources/iam.tf#13) grants permissions for Control Tower, Service Catalog, and other automation needs.
 Finally, the IAMRole [cicd_role] is added as a principal to the [service catalog Control Tower portfolio](management_resources/servicecatalog.tf#10).
 
+![InitialSetup](diagrams/AWS_Automation_GitHub-InitialSetup.drawio.png)
+
 This should be applied once by an account user with permissions to assume the AWSAdministratorAccess role.  
 The default workspace can be used.
 
+## Backstage Setup
+### Backstage Install
+Backstage sources are not part of this repo, and detailed setup instructions are also not provided.  
+If you want to industrialize the setup after trying it out, there are deployment instructions available at the [official Backstage documentation](https://backstage.io/docs/deployment/).
+
+For this simple example, it's enough to launch Backstage locally.  
+Just follow the [getting-started](https://backstage.io/docs/getting-started/) instructions provided by Backstage to get the sources.
+
+### Backstage Configuration
+This setup requires [GitHub actions to be installed](https://backstage.io/docs/features/software-templates/builtin-actions/), so that the GitHub MR can be created.
+
+From backstage root dir call:  
+`yarn --cwd packages/backend add @backstage/plugin-scaffolder-backend-module-github`
+
+and add to `/packages/backend/src/index.ts`:  
+`backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));`
+
+To be able to discover the Catalog Entities from GitHub (and to trigger the eventual MR), Backstage requires a Token with the scopes (repo, workflow) for GitHub.  
+For this simple scenario, it is enough to [create a PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) and set it as an environment variable (GITHUB_TOKEN).
+
+There is a special [catalog entry for the management account](.backstage/management/management.yaml), so that the automation knows where Control Tower and the root OU are.  
+Update the contents of the file to correctly reflect your management account ID and root OU.  
+
+Finally, copy over the [example app-config.yaml](.backstage/config/app-config.yaml) from this repo.
+
+````
+catalog:
+  orphanStrategy: delete
+  processingInterval: { minutes: 3 }
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+    - allow: [Component, System, API, Resource, Location, Domain, Template]
+  locations:
+    - type: url
+      target: https://github.com/<<YOUR_GITHUB_ORG>>/aws_management/blob/main/catalog-info.yaml
+    - type: url
+      target: https://github.com/<<YOUR_GITHUB_ORG>>/aws_environments/blob/main/catalog-info.yaml
+````
+Make sure you modify the catalog location URLs to point to your own GitHub clones/forks of these repos.
+
+### Launch Backstage
+Its time to [start Backstage](https://backstage.io/docs/getting-started/#2-run-the-backstage-app).
+````
+cd my-backstage-app # your app name
+yarn dev
+````
+
+## Backstage catalog
+If everything has gone to plan, you should see Backstage starting up and available on your [localhost](http://localhost:3000/catalog) with two entries in the catalog, AWS Management and AWS Environments.
+To understand what the Catalog is, please check the [Backstage documentation](https://backstage.io/docs/features/software-catalog/).
+
+### Ecosystem Model
+The OUs and accounts created in the management repo are represented in the Backstage Catalog based on the [Backstage System Model](https://backstage.io/docs/features/software-catalog/system-model).
+
+#### Domains
+Any OU you create in AWS via Backstage will have a catalog entry here.
+
+#### Systems
+Any account you create in AWS via Backstage will have a catalog entry here.
+
+#### Templates
+There are four templates ready to use in the two repositories.
+
+**OU and Account automation**  
+Part of this repo and used to provision new OUs and accounts.  
+* [AWS OU Provision](.backstage/templates/aws-account-provision.yaml) 
+* [AWS Account Provision](.backstage/templates/aws-ou-operation.yaml)
+
+**Environment automation**  
+Part of the [aws_environments repository](https://github.com/tamer84/aws_environments), and will be described in detail in that repositories [README.md]()https://github.com/tamer84/aws_environments/README.md).  
+* [AWS Environment Configuration](https://github.com/tamer84/aws_environments/blob/main/.backstage/templates/aws-environment-configuration.yaml)
+* [AWS Environment Operation](https://github.com/tamer84/aws_environments/blob/main/.backstage/templates/aws-environment-operation.yaml)
+
+
 ## Usage
-Interacting with the example is via [GitHub Actions](https://github.com/features/actions).  
+Interacting with the example is via Backstage Templates, which trigger [GitHub Actions](https://github.com/features/actions).  
+The templates can be accessed in the local running instance of [Backstage](http://localhost:3000/create?filters%5Bkind%5D=template&filters%5Buser%5D=all&limit=20).  
+
+
+
+## Workflows
 The two workflows (OU and account) are defined in the [.github/workflows](.github/workflows) directory.  
 
 Each workflow requires [input variables](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onworkflow_dispatchinputs), which are in turn passed to terraform as variables for the provisioning.  
@@ -183,5 +267,5 @@ At the root of the repo is a file called [catalog-info.yaml](catalog-info.yaml),
 This tells Backstage to scan the [.backstage directory](.backstage) for Catalog Entities.
 
 ## Next steps
-Now that Control Tower OUs and accounts can be provisioned via GutHub actions, its time to provision resources into the accounts via Backstage.  
-For detailed instructions on the Backstage Setup, see the repo [aws_environments](https://github.com/tamer84/aws_environments).
+Now that Control Tower OUs and accounts can be provisioned via GutHub actions, it's time to provision resources into the accounts via Backstage.  
+Go see the repo [aws_environments](https://github.com/tamer84/aws_environments) to learn how to configure resources for environments.
