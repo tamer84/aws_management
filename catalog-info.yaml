@@ -1,4 +1,3 @@
----
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
@@ -17,11 +16,11 @@ spec:
   lifecycle: production
   owner: guests
 ---
-#apiVersion: backstage.io/v1alpha1
-#kind: Location
-#metadata:
-#  name: iac-management-files
-#  description: IAC systems collection
-#spec:
-#  targets:
-#    - .backstage/*/*.yaml
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: iac-management-files
+  description: IAC systems collection
+spec:
+  targets:
+    - .backstage/*/*.yaml
