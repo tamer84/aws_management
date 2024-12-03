@@ -1,0 +1,65 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+# some metadata about the template itself
+metadata:
+  name: aws-account-provision
+  title: AWS Account Provision
+  description:  Provision a new AWS account
+spec:
+  owner: guests
+  type: Account
+  parameters:
+    - title: AWS Provision account
+      required:
+        - environment_name
+        - parent_ou
+        - owner
+      properties:
+        environment_name:
+          title: Account name
+          type: string
+          description: Name of the account
+          pattern: '^[a-zA-Z0-9-]+$'
+          ui:help: 'Use only letters (a-z, A-Z), numbers (0-9), and dashes (-).'
+        domain:
+          title: Route53 domain
+          type: string
+          description: Route53 domain to assign subdomains under
+        parent_ou:
+          title: Parent OU
+          description: Parent OU for account
+          ui:field: EntityPicker
+          ui:options:
+            allowArbitraryValues: false
+            allowedKinds:
+              - domain
+            defaultKind: domain
+        owner:
+          title: SSO Email of owner
+          type: string
+          description: Email of account owner. Should be registered user in Identity Center
+  steps:
+    - id: fetchManagementAccount
+      name: Fetch Management Account data
+      action: catalog:fetch
+      input:
+        entityRef: system:default/management
+    - id: fetchOu
+      name: Fetch OU
+      action: catalog:fetch
+      input:
+        entityRef: ${{ parameters.parent_ou }}
+
+    - id: environment-operation
+      name: AWS provision new account
+      action: github:actions:dispatch
+      input:
+        repoUrl: github.com?repo=aws_management&owner=tamer84
+        workflowId: account.yml
+        branchOrTagName: main
+        workflowInputs:
+          account: ${{ steps['fetchManagementAccount'].output.entity.metadata.annotations['aws-account-id'] }}
+          environment: ${{ parameters.environment_name }}
+          domain: ${{ parameters.domain }}
+          ou: ${{ steps['fetchOu'].output.entity.metadata.annotations.ou_id  }}
+          owner: ${{ parameters.owner }}

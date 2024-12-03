@@ -1,0 +1,26 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: aws_management
+  title: AWS Management
+  description: Terraform IAC repo for AWS Control Tower managed Account and Organization automation.
+  tags:
+    - terraform
+    - iac
+    - cicd
+    - accounts
+  labels:
+    team: platform
+spec:
+  type: library
+  lifecycle: production
+  owner: guests
+---
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: iac-management-files
+  description: IAC systems collection
+spec:
+  targets:
+    - .backstage/*/*.yaml
