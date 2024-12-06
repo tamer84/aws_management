@@ -1,0 +1,70 @@
+name:
+  New Account
+on:
+  workflow_dispatch:
+    inputs:
+      account:
+        description: 'AWS Management account ID'
+        required: true
+        type: string
+
+      environment:
+        description: 'Environment name for new account'
+        required: true
+        type: string
+
+      domain:
+        description: 'DNS Domain'
+        required: false
+        type: string
+
+      ou:
+        description: 'Parent ou id'
+        required: true
+        type: string
+
+      owner:
+        description: 'SSO Email of account owner'
+        required: true
+        type: string
+
+env:
+  AWS_REGION:  eu-central-1
+  ACCOUNT:     ${{ inputs.account }}
+  OU:          ${{ inputs.ou }}
+  DOMAIN:      ${{ inputs.domain }}
+  ENVIRONMENT: ${{ inputs.environment }}
+  OWNER:       ${{ inputs.owner }}
+
+permissions:
+  id-token: write
+  contents: write
+jobs:
+  AssumeRoleAndCreateAccount:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v4
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          role-to-assume: arn:aws:iam::${{ env.ACCOUNT }}:role/service-role/cicd_role #change to reflect your IAM role’s ARN
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
+      - name: Create new Account via Terraform
+        run: |
+          cd account_resources
+          terraform init -backend-config=../_terraform/remote_backend.hcl
+          terraform workspace select -or-create $OU-$ENVIRONMENT
+          terraform apply --auto-approve -var parent_ou_id=$OU -var domain=$DOMAIN -var environment=$ENVIRONMENT -var sso_email=$OWNER
+      - name: Update Backstage Catalog entries
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Added account to catalog"
+          git push

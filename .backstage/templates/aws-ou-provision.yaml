@@ -1,0 +1,37 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+# some metadata about the template itself
+metadata:
+  name: aws-ou-provision
+  title: AWS OU Provision
+  description:  Provision a new AWS OU
+spec:
+  owner: guests
+  type: OU
+  parameters:
+    - title: AWS Provision OU
+      required:
+        - ou_name
+      properties:
+        ou_name:
+          title: OU Name
+          type: string
+          description: Name for the new OU
+
+  steps:
+    - id: fetchManagementAccount
+      name: Fetch Management Account data
+      action: catalog:fetch
+      input:
+        entityRef: system:default/management
+
+    - id: environment-operation
+      name: AWS provision new OU
+      action: github:actions:dispatch
+      input:
+        repoUrl: github.com?repo=aws_management&owner=tamer84
+        workflowId: ou.yml
+        branchOrTagName: main
+        workflowInputs:
+          account: ${{ steps['fetchManagementAccount'].output.entity.metadata.annotations['aws-account-id'] }}
+          ou: ${{ parameters.ou_name }}

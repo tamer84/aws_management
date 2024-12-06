@@ -1,0 +1,7 @@
+*.tfstate
+*.tfstate.backup
+_bootstrap_terraform/.terraform.lock.hcl
+.idea/
+*.iml
+.terraform/
+account_resources/account_params/*.json
